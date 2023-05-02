@@ -1,8 +1,8 @@
 "use strict";
 
+const axios = require('axios');
 const { createCoreController } = require("@strapi/strapi").factories;
-const Paymongo = require("paymongo");
-const paymongo = new Paymongo("sk_test_SsQLejeRVDfVskZevWq4Dtku");
+
 
 module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async create(ctx) {
@@ -13,60 +13,55 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       currency: "PHP",
       description: product.desc,
       // images: [product.image],
-      name: product.name,
+      name: product.title,
       quantity: product.quantity,
     }));
 
-    const data = {
+
+    console.log(lineItems, "line items btihc")
+    const options = {
+      method: 'POST',
+      url: 'https://api.paymongo.com/v1/checkout_sessions',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        authorization: 'Basic c2tfdGVzdF9Tc1FMZWplUlZEZlZza1pldldxNER0a3U6'
+      },
       data: {
-        attributes: {
-          amount: lineItems.reduce((sum, item) => sum + item.amount * item.quantity, 0),
-          currency: "PHP",
-          type: "gcash",
-          redirect: {
-            success: "http://example.com/success",
-            failed: "http://example.com/cancel",
-          },
-          billing: {
-            address: {
-              line1: "123 Main St.",
-              line2: "Suite 1",
-              city: "Makati",
-              state: "Metro Manila",
-              postal_code: "1234",
-              country: "PH",
-            },
-            name: "John Doe",
-            email: "john.doe@example.com",
-            phone: "+639123456789",
-          },
-          description: "My order",
-          line_items: lineItems,
-          payment_method_types: ["card"],
-          reference_number: "123456",
-          send_email_receipt: false,
-          show_description: true,
-          show_line_items: true,
-          statement_descriptor: "My Business",
+        data: {
+          attributes: {
+            billing: {address: {country: 'PH'}},
+            line_items: lineItems,
+            payment_method_types: ['card', 'gcash'],
+            send_email_receipt: false,
+            show_description: true,
+            show_line_items: true,
+            cancel_url: 'http://localhost:5173/',
+            success_url: 'http://localhost:5173/',
+            description: 'string'
+          }
         }
       }
     };
 
 
-
     try {
-      const response = await paymongo.sources.create(data);
+      const response = await axios.request(options);
       const source = response.data;
       console.log(source, "HAHAHHAHAHHA");
      
+      console.log(source.data.id, "hhaha")
       await strapi
       .service("api::order.order")
-      .create({ data: {  products, paymongo_checkout_id: source.id } });
-
+      .create({ data: {  products, paymongo_checkout_id: source.data.id } });
       ctx.send({ source });
     } catch (error) {
-      console.error(error);
+      console.log(lineItems)
+      console.error(error, "heheheh");
+      console.error(error.response.data, "AHHAHAH"); // Print the API response data
       ctx.badRequest(error);
     }
   },
 }));
+
+
