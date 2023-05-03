@@ -33,7 +33,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
             billing: {address: {country: 'PH'}},
             line_items: lineItems,
             payment_method_types: ['card', 'gcash'],
-            send_email_receipt: false,
+            send_email_receipt: false,  
             show_description: true,
             show_line_items: true,
             cancel_url: 'http://localhost:5173/',
