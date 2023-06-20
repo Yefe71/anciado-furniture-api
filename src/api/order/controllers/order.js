@@ -6,19 +6,18 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async create(ctx) {
-    const { products } = ctx.request.body;
-
+    const { products, user } = ctx.request.body;
     const lineItems = products.map((product) => ({
       amount: Math.round(product.price * 100),
       currency: "PHP",
-      description: product.desc,
-      // images: [product.image],
+      description: product.desc.substring(0, 249),
       name: product.title,
       quantity: product.quantity,
     }));
 
+    console.log(user, "HAHAH")
 
-    console.log(lineItems, "line items btihc")
+    
     const options = {
       method: 'POST',
       url: 'https://api.paymongo.com/v1/checkout_sessions',
@@ -38,7 +37,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
             show_line_items: true,
             cancel_url: 'http://localhost:5173/',
             success_url: 'http://localhost:5173/',
-            description: 'string'
+            description: `${user.first_name} ${user.last_name} `
           }
         }
       }
