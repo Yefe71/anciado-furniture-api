@@ -37,7 +37,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
             show_line_items: true,
             cancel_url: 'http://localhost:5173/',
             success_url: 'http://localhost:5173/',
-            description: `${user.first_name} ${user.last_name} `
+            description: `Anciado Furniture`,
           }
         }
       }
@@ -52,7 +52,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       console.log(source.data.id, "hhaha")
       await strapi
       .service("api::order.order")
-      .create({ data: {  products, paymongo_checkout_id: source.data.id } });
+      .create({ data: {  products, paymongo_checkout_id: source.data.id, customer_name: `${user.first_name} ${user.last_name}`} });
       ctx.send({ source });
     } catch (error) {
       console.log(lineItems)

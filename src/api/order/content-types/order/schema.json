@@ -17,6 +17,9 @@
     },
     "products": {
       "type": "json"
+    },
+    "customer_name": {
+      "type": "string"
     }
   }
 }
