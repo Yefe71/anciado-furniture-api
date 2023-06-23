@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testimonies",
+  "info": {
+    "singularName": "testimony",
+    "pluralName": "testimonies",
+    "displayName": "testimony",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "stars": {
+      "type": "integer"
+    },
+    "desc": {
+      "type": "text"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}
