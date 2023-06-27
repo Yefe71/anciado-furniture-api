@@ -26,6 +26,7 @@ const populatePurchases = async () => {
             price,
             title,
             paymongo_checkout_id,
+            createdAt
           },
         });
     }

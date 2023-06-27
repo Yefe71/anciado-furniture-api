@@ -30,7 +30,8 @@
         "Pending",
         "Processing",
         "Shipped"
-      ]
+      ],
+      "default": "Pending"
     },
     "img": {
       "type": "string"
