@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_items",
+  "info": {
+    "singularName": "order-item",
+    "pluralName": "order-items",
+    "displayName": "OrderItem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "customer_name": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "text"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "title": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "enumeration",
+      "enum": [
+        "Pending",
+        "Processing",
+        "Shipped"
+      ]
+    },
+    "img": {
+      "type": "string"
+    },
+    "paymongo_checkout_id": {
+      "type": "string"
+    }
+  }
+}

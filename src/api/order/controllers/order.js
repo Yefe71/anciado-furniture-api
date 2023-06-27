@@ -3,6 +3,36 @@
 const axios = require('axios');
 const { createCoreController } = require("@strapi/strapi").factories;
 
+const populatePurchases = async () => {
+  await strapi.db.query('api::order-item.order-item').deleteMany({});
+
+  const orders = await strapi.service("api::order.order").find();
+  const orderItemsList = await strapi.service("api::order-item.order-item").find();
+
+  console.log(orderItemsList, "HIAHIIHAIHAIHAIHAIH")
+  for (const order of orders.results) {
+    const { customer_name, paymongo_checkout_id, products, createdAt } = order;
+
+    console.log(createdAt, "CREATED AT")
+    for (const product of products) {
+      const { img, desc, price, title } = product;
+      await strapi
+        .service("api::order-item.order-item")
+        .create({
+          data: {
+            customer_name,
+            img,
+            desc,
+            price,
+            title,
+            paymongo_checkout_id,
+          },
+        });
+    }
+  }
+
+  console.log("Populating purchases...");
+};
 
 module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async create(ctx) {
@@ -53,6 +83,9 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       await strapi
       .service("api::order.order")
       .create({ data: {  products, paymongo_checkout_id: source.data.id, customer_name: `${user.first_name} ${user.last_name}`} });
+      
+      await populatePurchases()
+      
       ctx.send({ source });
     } catch (error) {
       console.log(lineItems)

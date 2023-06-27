@@ -5,6 +5,13 @@ const sdk = require("api")("@paymongo/v2#5u9922cl2759teo");
  * order controller
  */
 const { createCoreController } = require("@strapi/strapi").factories;
+
+
+const populatePurchases = async () => {
+
+
+};
+
 module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async create(ctx) {
     const { products } = ctx.request.body;
@@ -51,6 +58,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         paymongo_checkout_id: checkout.data.id,
         products,
       });
+
+  
       ctx.send({ checkout });
     } catch (error) {
       console.error(error);

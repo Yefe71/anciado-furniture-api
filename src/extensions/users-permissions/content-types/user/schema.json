@@ -104,6 +104,10 @@
     "address": {
       "type": "text",
       "required": true
+    },
+    "contact_number": {
+      "type": "biginteger",
+      "required": true
     }
   }
 }
