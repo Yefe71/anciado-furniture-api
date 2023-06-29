@@ -4,22 +4,33 @@
   "info": {
     "singularName": "order",
     "pluralName": "orders",
-    "displayName": "order",
-    "description": ""
+    "displayName": "Order"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "paymongo_checkout_id": {
-      "type": "text"
+    "customer_name": {
+      "type": "string"
+    },
+    "price": {
+      "type": "decimal"
     },
     "products": {
       "type": "json"
     },
-    "customer_name": {
-      "type": "string"
+    "orderId": {
+      "type": "uid"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "paid",
+        "failed",
+        "refunded"
+      ]
     }
   }
 }

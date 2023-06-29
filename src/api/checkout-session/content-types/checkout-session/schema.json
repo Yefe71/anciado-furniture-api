@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "checkout_sessions",
+  "info": {
+    "singularName": "checkout-session",
+    "pluralName": "checkout-sessions",
+    "displayName": "checkoutSession",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "paymongo_checkout_id": {
+      "type": "text"
+    },
+    "products": {
+      "type": "json"
+    },
+    "customer_name": {
+      "type": "string"
+    }
+  }
+}
