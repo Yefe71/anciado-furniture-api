@@ -9,8 +9,8 @@ const { createCoreController } = require('@strapi/strapi').factories;
 module.exports = createCoreController('api::order.order', ({strapi}) => ({
     handleWebhook: async (ctx) => {
         try {
-          // Extract the event data from the request body
-        //   const eventData = ctx.request.body;
+    
+          const eventData = ctx.request.body;
     
         //   // Process the event based on its type
         //   switch (eventData.data.attributes.type) {
@@ -28,12 +28,11 @@ module.exports = createCoreController('api::order.order', ({strapi}) => ({
         //       break;
         //   }
     
-        //   console.log(eventData, "PLEASE I RAN RIGHT?")
+          console.log(eventData, "PLEASE I RAN RIGHT?")
         //   // Send a successful response to PayMongo
         //   ctx.send({ received: true });
 
-        console.log("I RAN RIGHT?")
-        return 1;
+            // return ctx.request.body;
         } catch (error) {
         //   // Handle any errors that occur during event processing
         //   console.error(error);
